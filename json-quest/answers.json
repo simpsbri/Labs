@@ -1,0 +1,19 @@
+[
+  {
+    "name": "John",
+    "quest": "The Ultimate Quest",
+    "color": "Lavender"
+  },
+
+  {
+    "name": "Travis",
+    "quest": "The Experimental Quest",
+    "color": "Blue"
+  },
+
+  {
+    "name": "Beavis",
+  "quest": "Corholio",
+  "color": "Teepee"
+}
+]

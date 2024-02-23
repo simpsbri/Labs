@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Answer Checker</title>
+  </head>
+  <body>
+    <form id="userForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" />
+      <br />
+      <label for="quest">Quest:</label>
+      <input type="text" id="quest" name="quest" />
+      <br />
+      <label for="color">Color:</label>
+      <input type="text" id="color" name="color" />
+      <br />
+      <button type="submit">Submit</button>
+    </form>
+    <div id="result"></div>
+    <script>
+      const form = document.getElementById('userForm')
+      const resultDiv = document.getElementById('result')
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault()
+
+        const name = document.getElementById('name').value
+        const quest = document.getElementById('quest').value
+        const color = document.getElementById('color').value
+        console.log(name, quest, color)
+
+        fetch('/answers.json')
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`)
+            }
+            return response.json()
+          })
+
+          .then((data) => {
+            let message // Declare message here
+            console.log(data)
+            for (var i = 0; i < data.length; i++) {
+              if (
+                data[i].name === name &&
+                data[i].quest === quest &&
+                data[i].color === color
+              ) {
+                message = 'You can continue on your way!'
+              } else {
+                message = 'You are denied passage.'
+              }
+            }
+
+            resultDiv.textContent = message
+          })
+          .catch((error) => {
+            console.error('Error fetching data:', error)
+            resultDiv.textContent = 'An error occurred while fetching the data.'
+          })
+      })
+    </script>
+  </body>
+</html>
